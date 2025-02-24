@@ -5,15 +5,31 @@ import "fmt"
 func main() {
 	nums := []int{2, 5, 3, 8, 7, 1}
 	dnums := make([][]int, 0)
-	// output := make([]int, len(nums))
-	// numa, numb := split(nums)
-	// fmt.Println(output, nums[1:])
-
 	for _, v := range nums {
 		vv := []int{v}
 		dnums = append(dnums, vv)
 	}
-	fmt.Println(dnums)
+
+	fmt.Println("output: ", remerge(dnums))
+}
+
+func remerge(nums [][]int) []int {
+	fmt.Println("start remerge: ", nums)
+	if len(nums) == 1 {
+		return nums[0]
+	}
+
+	mnums := make([][]int, 0)
+	for i := 0; i < len(nums); i = i + 2 {
+		if len(nums)-1 == i {
+			mnums = append(mnums, nums[len(nums)-1])
+			break
+		}
+		numa, numb := nums[i], nums[i+1]
+		mnums = append(mnums, merge(numa, numb))
+	}
+
+	return remerge(mnums)
 }
 
 // numa, numaにはソート済みの数字配列を期待する
