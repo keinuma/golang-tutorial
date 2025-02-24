@@ -1,20 +1,29 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+	"time"
+)
 
 func main() {
-	nums := []int{2, 5, 3, 8, 7, 1}
+	nums := random_nums(100)
 	dnums := make([][]int, 0)
 	for _, v := range nums {
 		vv := []int{v}
 		dnums = append(dnums, vv)
 	}
 
-	fmt.Println("output: ", remerge(dnums))
+	s := time.Now()
+	output := remerge(dnums)
+	elapsed := time.Since(s)
+
+	fmt.Println("input: ", nums)
+	fmt.Println("output: ", output)
+	fmt.Println("processimg time: ", elapsed)
 }
 
 func remerge(nums [][]int) []int {
-	fmt.Println("start remerge: ", nums)
 	if len(nums) == 1 {
 		return nums[0]
 	}
@@ -55,5 +64,13 @@ func merge(numa, numb []int) []int {
 		}
 	}
 
+	return output
+}
+
+func random_nums(n int) []int {
+	output := make([]int, 0)
+	for i := 0; i < n; i++ {
+		output = append(output, rand.Intn(1000))
+	}
 	return output
 }
