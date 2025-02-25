@@ -8,14 +8,15 @@ import (
 
 func main() {
 	nums := random_nums(100)
+	s := time.Now()
+
 	dnums := make([][]int, 0)
 	for _, v := range nums {
 		vv := []int{v}
 		dnums = append(dnums, vv)
 	}
-
-	s := time.Now()
 	output := remerge(dnums)
+
 	elapsed := time.Since(s)
 
 	fmt.Println("input: ", nums)
