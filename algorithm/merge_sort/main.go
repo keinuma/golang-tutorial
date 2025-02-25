@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	nums := random_nums(100)
+	nums := random_nums(1000)
 	s := time.Now()
 
 	dnums := make([][]int, 0)
