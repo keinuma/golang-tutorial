@@ -15,12 +15,10 @@ func main() {
 		vv := []int{v}
 		dnums = append(dnums, vv)
 	}
-	output := remerge(dnums)
+
+	remerge(dnums)
 
 	elapsed := time.Since(s)
-
-	fmt.Println("input: ", nums)
-	fmt.Println("output: ", output)
 	fmt.Println("processimg time: ", elapsed)
 }
 
