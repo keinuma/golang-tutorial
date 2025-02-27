@@ -6,34 +6,53 @@ import (
 	"time"
 )
 
-const ARRAY_LENGTH = 10000
+const ARRAY_LENGTH = 5
 
 func main() {
 	nums := random_nums(ARRAY_LENGTH)
+	fmt.Println("start: ", nums)
 	s := time.Now()
 
-	quick_sort(nums)
+	quickSort(nums)
 
 	elapsed := time.Since(s)
 	fmt.Println("processimg time: ", elapsed)
 }
 
-func quick_sort(nums []int) []int {
-	if len(nums) <= 1 {
-		return nums
-	}
-	bi := rand.Intn(len(nums))
-	b := nums[bi]
+func sort(nums []int, low, high int) int {
+	pivot := nums[high]
+	i := low - 1
+	fmt.Println("  pivot: ", pivot)
+	fmt.Println("  low, high: ", low, high)
 
-	left, right := make([]int, 0), make([]int, 0)
-	for _, v := range nums {
-		if b > v {
-			left = append(left, v)
-		} else if b < v {
-			right = append(right, v)
+	for j := low; j < high; j++ {
+		if nums[j] <= pivot {
+			i++
+			nums[i], nums[j] = nums[j], nums[i]
 		}
 	}
-	return append(append(quick_sort(left), b), quick_sort(right)...)
+
+	fmt.Println("  in sort: ", nums)
+	nums[i+1], nums[high] = nums[high], nums[i+1]
+	fmt.Println("  in sort: ", nums)
+	return i + 1
+}
+
+func reQuickSort(nums []int, low, high int) {
+	fmt.Println("mid: ", nums)
+	if low < high {
+		pivotIndex := sort(nums, low, high)
+
+		reQuickSort(nums, low, pivotIndex-1)
+		reQuickSort(nums, pivotIndex+1, high)
+	}
+}
+
+func quickSort(nums []int) {
+	if len(nums) <= 1 {
+		return
+	}
+	reQuickSort(nums, 0, len(nums)-1)
 }
 
 func random_nums(n int) []int {
