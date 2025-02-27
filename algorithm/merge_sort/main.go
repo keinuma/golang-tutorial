@@ -10,56 +10,44 @@ func main() {
 	nums := random_nums(1000)
 	s := time.Now()
 
-	dnums := make([][]int, 0)
-	for _, v := range nums {
-		vv := []int{v}
-		dnums = append(dnums, vv)
-	}
-
-	remerge(dnums)
+	remerge(nums)
 
 	elapsed := time.Since(s)
 	fmt.Println("processimg time: ", elapsed)
 }
 
-func remerge(nums [][]int) []int {
-	if len(nums) == 1 {
-		return nums[0]
+func remerge(nums []int) []int {
+	if len(nums) <= 1 {
+		return nums
 	}
 
-	mnums := make([][]int, 0)
-	for i := 0; i < len(nums); i = i + 2 {
-		if len(nums)-1 == i {
-			mnums = append(mnums, nums[len(nums)-1])
-			break
-		}
-		numa, numb := nums[i], nums[i+1]
-		mnums = append(mnums, merge(numa, numb))
-	}
+	i := len(nums) / 2
+	left := remerge(nums[:i])
+	right := remerge(nums[i:])
 
-	return remerge(mnums)
+	return merge(left, right)
 }
 
-// numa, numaにはソート済みの数字配列を期待する
-func merge(numa, numb []int) []int {
+// left, rightにはソート済みの数字配列を期待する
+func merge(left, right []int) []int {
 	output := make([]int, 0)
-	roops := len(numa) + len(numb)
+	roops := len(left) + len(right)
 
 	for i := 0; i < roops; i++ {
-		if len(numa) == 0 {
-			output = append(output, numb...)
+		if len(left) == 0 {
+			output = append(output, right...)
 			break
 		}
-		if len(numb) == 0 {
-			output = append(output, numa...)
+		if len(right) == 0 {
+			output = append(output, right...)
 			break
 		}
-		if numa[0] > numb[0] {
-			output = append(output, numb[0])
-			numb = numb[1:]
+		if left[0] > right[0] {
+			output = append(output, right[0])
+			right = right[1:]
 		} else {
-			output = append(output, numa[0])
-			numa = numa[1:]
+			output = append(output, left[0])
+			left = left[1:]
 		}
 	}
 
