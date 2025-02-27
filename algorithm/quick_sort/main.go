@@ -6,8 +6,10 @@ import (
 	"time"
 )
 
+const ARRAY_LENGTH = 10000
+
 func main() {
-	nums := random_nums(1000)
+	nums := random_nums(ARRAY_LENGTH)
 	s := time.Now()
 
 	quick_sort(nums)
@@ -37,7 +39,7 @@ func quick_sort(nums []int) []int {
 func random_nums(n int) []int {
 	output := make([]int, 0)
 	for i := 0; i < n; i++ {
-		output = append(output, rand.Intn(1000))
+		output = append(output, rand.Intn(ARRAY_LENGTH))
 	}
 	return output
 }
